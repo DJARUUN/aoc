@@ -6,9 +6,9 @@ This is the place where I upload all my (probably) very bad tries and solutions 
 
 ```
 └── [year]
-    └── [day]
-        ├── commit: [year] day [day] part 1 [lang]
-        └── commit: [year] day [day] part 2 [lang]
+     └── [day]
+          ├── commit: [year] day [day] part 1 [lang]
+          └── commit: [year] day [day] part 2 [lang]
 ```
 
 Congrats if you understood it immediately, you are very smart!
