@@ -16,13 +16,14 @@ let get_input filename =
   let lst1, lst2 = create_lsts contents in
   (List.map Int.of_string_exn lst1, List.map Int.of_string_exn lst2)
 
-let calc_dist lst1 lst2 =
-  let sorted_lst1, sorted_lst2 =
-    (List.sort compare lst1, List.sort compare lst2)
-  in
-  List.fold_left2 (fun diff a b -> diff + abs (a - b)) 0 sorted_lst1 sorted_lst2
+let calc_similarity lst1 lst2 =
+  List.fold_left
+    (fun similarity a ->
+      let times_in_lst2 = List.count (fun b -> a = b) lst2 in
+      similarity + (a * times_in_lst2))
+    0 lst1
 
 let () =
   let lst1, lst2 = get_input "input" in
-  let result = calc_dist lst1 lst2 in
+  let result = calc_similarity lst1 lst2 in
   print_int result
