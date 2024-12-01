@@ -13,4 +13,4 @@ This is the place where I upload all my (probably) very bad tries and solutions 
 
 Congrats if you understood it immediately, you are very smart!
 
-But yes, the solutions are in their own folders with parts one and two being two separate commits with the format `[year] day [day] part [part] [lang]`. So an example could be: the  folder `2024/1` with the commit: `2024 day 1 part 1 OCaml`.
+But yes, the solutions are in their own folders with parts one and two being two separate commits with the format `[year] day [day] part [part] [lang]`. So an example could be the folder `2024/1` with the commit: `2024 day 1 part 1 OCaml`.
