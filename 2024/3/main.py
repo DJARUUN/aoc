@@ -9,12 +9,23 @@ def calc_sum(instructions: list[tuple[int, int]]) -> int:
 def get_real_instructions(input: str) -> list[tuple[int, int]]:
     pattern = re.compile(r"mul\(([0-9]{1,3}),([0-9]{1,3})\)")
 
-    instructions: list[tuple[int, int]] = []
-    for match in pattern.finditer(input):
-        (left, right) = match.groups()
-        instructions.append((int(left), int(right)))
+    def aux(acc: list[tuple[int, int]], rest: str) -> list[tuple[int, int]]:
+        do_idx = rest.find("do()")
+        dont_idx = rest.find("don't()", do_idx)
 
-    return instructions
+        current_section = rest[do_idx:dont_idx]
+        if current_section.strip() == "":
+            return acc
+
+        new_acc = acc.copy()
+        for match in pattern.finditer(current_section):
+            (left, right) = match.groups()
+            new_acc.append((int(left), int(right)))
+
+        new_rest = rest[dont_idx:]
+        return aux(new_acc, new_rest)
+
+    return aux([], f"do(){input}don't()")
 
 
 def get_input(filename: str) -> str:
