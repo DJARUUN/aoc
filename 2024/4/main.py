@@ -10,63 +10,48 @@ def create_matrix(input: str) -> list[list[str]]:
     return matrix
 
 
-def check_pos(matrix: list[list[str]], supposed_to_be: str, x: int, y: int) -> bool:
+def get_letter_at_pos(matrix: list[list[str]], x: int, y: int) -> str | None:
     if x < 0 or y < 0 or x > len(matrix[0]) - 1 or y > len(matrix) - 1:
-        return False
+        return None
 
     letter = matrix[y][x]
+    return letter
 
-    return letter == supposed_to_be
 
-
-WORD = "XMAS"
+WORD = "MAS"
 
 
 def word_search(matrix: list[list[str]]) -> int:
     correct_count = 0
 
-    for y in range(len(matrix)):
-        row = matrix[y]
-
-        for x in range(len(row)):
-            letter = matrix[y][x]
-            if letter != WORD[0]:
+    for y, row in enumerate(matrix):
+        for x, letter in enumerate(row):
+            if letter != WORD[1]:
                 continue
 
-            is_corrects = [
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
-            ]
+            positions = [(x + 1, y + 1), (x - 1, y - 1), (x - 1, y + 1), (x + 1, y - 1)]
 
-            for offset in range(1, len(WORD)):
-                positions = [
-                    (x + offset, y),
-                    (x - offset, y),
-                    (x, y + offset),
-                    (x, y - offset),
-                    (x + offset, y + offset),
-                    (x + offset, y - offset),
-                    (x - offset, y + offset),
-                    (x - offset, y - offset),
-                ]
+            letters: list[str] = []
 
-                supposed_to_be = WORD[offset]
+            is_valid = True
+            for x_pos, y_pos in positions:
+                letter = get_letter_at_pos(matrix, x_pos, y_pos)
+                if not letter:
+                    is_valid = False
+                    continue
 
-                for i, (x_pos, y_pos) in enumerate(positions):
-                    is_corrects[i] = is_corrects[i] and check_pos(
-                        matrix, supposed_to_be, x_pos, y_pos
-                    )
+                letters.append(letter)
 
-            for j, is_correct in enumerate(is_corrects):
-                if is_correct:
-                    correct_count += 1
-                    print(f"CORRECT: {x} {y} {j}")
+            if not is_valid:
+                continue
+
+            diagonal_1 = letters[0] + letters[1]
+            diagonal_2 = letters[2] + letters[3]
+
+            if (diagonal_1 == "MS" or diagonal_1 == "SM") and (
+                diagonal_2 == "MS" or diagonal_2 == "SM"
+            ):
+                correct_count += 1
 
     return correct_count
 
